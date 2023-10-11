@@ -1,4 +1,4 @@
-name: Maven CI/CD Project
+name: Maven CI/CD Project-simple
 
 on:
   push:

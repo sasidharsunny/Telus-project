@@ -51,3 +51,4 @@ jobs:
         args: upload hello generic-local --build-name=my-build --build-number=2
         env:
           CRED: "username"
+

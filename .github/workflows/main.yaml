@@ -40,6 +40,11 @@ jobs:
         JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
         JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-    - name: Publish to Artifactory
-      run: |
-        jf rt u "/home/runner/work/Telus-project/Telus-project/webapp/target/*.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/
+    - name: Step2 - Upload
+      uses: retgits/actions/jfrog-cli-go@master
+      with:
+        secrets: ${{ secrets.JF_URL }}, ${{ secrets.ARTIFACTORY_USERNAME }}, ${{ secrets.ARTIFACTORY_PASSWORD }}
+        args: upload hello generic-local --build-name=my-build --build-number=2
+        env:
+          CRED: "username"
+      needs: ["Publish to Artifactory"]

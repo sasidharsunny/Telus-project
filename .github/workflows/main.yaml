@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build_and_publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,24 +31,27 @@ jobs:
     - name: jfrog-version
       run: jf --version
 
-  upload:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
     - name: j-frog-integration
       uses: jfrog/setup-jfrog-cli@v3
       with:
         jfrog_url: ${{ secrets.JF_URL }}
+           # JFrog Platform access token
         JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-        JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
         JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-    - name: Step2 - Upload
-      uses: retgits/actions/jfrog-cli-go@master
+    - name: Publish to Artifactory
+      run: |
+        jf rt u "server/src/.m2/*.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/
+
+    - name: "Step1 - Build app" 
+      uses: "retgits/actions/jfrog-cli-go@master"
       with:
-        secrets: ${{ secrets.URL }}, ${{ secrets.USER }}, ${{ secrets.PASSWORD }}
-        args: upload hello generic-local --build-name=my-build --build-number=2
+        jfrog_url: ${{ secrets.JF_URL }}
+           # JFrog Platform access token
+        JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+        JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
+        JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+        args: "go build go --no-registry"
         env:
           CRED: "username"
-

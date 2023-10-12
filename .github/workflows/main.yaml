@@ -40,6 +40,6 @@ jobs:
         JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
         JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-    - name: Publish to Artifactory
+    - name: Publish to Artifactory to jfrog
       run: |
         jf rt u "/home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/

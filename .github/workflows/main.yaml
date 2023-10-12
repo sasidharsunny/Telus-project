@@ -23,7 +23,7 @@ jobs:
       run: mvn clean install --file pom.xml
 
     - name: List generated WAR files
-      run: ls -l /home/runner/work/Telus-project/Telus-project/webapp/target/*.war
+      run: ls -l server/src/.m2
 
     - name: Deploy to Artifactory
       uses: jfrog/setup-jfrog-cli@v3
@@ -40,6 +40,6 @@ jobs:
         JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
         JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-    - name: Publish to Artifactory to jfrog
+    - name: Publish to Artifactory
       run: |
-        jf rt u "/home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/example-repo-local" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/
+        jf rt u "server/src/.m2/*.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/

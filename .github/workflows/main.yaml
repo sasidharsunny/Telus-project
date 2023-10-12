@@ -22,20 +22,20 @@ jobs:
     - name: Clean Target Directory
       run: rm -rf /home/runner/work/Telus-project/Telus-project/webapp/target/*
 
-
     - name: Build project with Maven
       run: mvn clean install --file pom.xml
 
     - name: Create Directory if Not Exists
       run: |
-      if [ ! -d /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war ]; then
-        mkdir -p /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war
-      fi
+        if [ ! -d /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war ]; then
+          mkdir -p /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war
+        fi
 
     - uses: actions/upload-artifact@v2
       with:
         name: package
-        path: storage  
+        path: storage
+
 
       
       

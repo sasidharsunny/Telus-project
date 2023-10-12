@@ -30,12 +30,16 @@ jobs:
       
     - name: jfrog-version
       run: jf --version
-
-    - name: Publish to Artifactory
-      run: |
-          for war_file in server/src/.m2/app.war; do
-            curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T "$jar_file" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/$(basename $jar_file)"
-          done
-      env:
-        ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-        ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      
+    - name: j-frog-integration
+      uses: jfrog/setup-jfrog-cli@v3
+  env:
+    # JFrog platform url (for example: https://acme.jfrog.io) 
+    JF_URL: ${{ secrets.JF_URL }}
+    
+    # Basic authentication credentials
+    JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+    JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+ 
+- run: |
+    jf rt ping

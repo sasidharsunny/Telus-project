@@ -27,7 +27,7 @@ jobs:
 
     - name: Publish to Artifactory
       run: |
-          for war_file in build/libs/*.jar; do
+          for war_file in server/src/.m2; do
             curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T "$jar_file" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/$(basename $jar_file)"
           done
       env:

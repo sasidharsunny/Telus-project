@@ -22,16 +22,13 @@ jobs:
     - name: Build project with Maven
       run: mvn clean install --file pom.xml
 
-    - name: Create Directory
-  run: |
-    if [ ! -d /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war ]; then
-      mkdir -p /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war
-    fi
+    - name: upload artifacts
+      run: mkdir staging $$ cp /home/runner/work/Telus-project/Telus-project/webapp/target/*.war staging
 
-    # - uses: actions/upload-artifact@v2
-    #   with:
-    #     name: package
-    #     path: staging  
+    - uses: actions/upload-artifact@v2
+      with:
+        name: package
+        path: staging  
 
       
       

@@ -19,11 +19,18 @@ jobs:
       with:
         java-version: 8
 
+    - name: Clean Target Directory
+      run: rm -rf /home/runner/work/Telus-project/Telus-project/webapp/target/*
+
+
     - name: Build project with Maven
       run: mvn clean install --file pom.xml
 
-    - name: upload artifacts
-      run: mkdir storage $$ cp /home/runner/work/Telus-project/Telus-project/webapp/target/*.war storage
+    - name: Create Directory if Not Exists
+      run: |
+      if [ ! -d /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war ]; then
+        mkdir -p /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war
+      fi
 
     - uses: actions/upload-artifact@v2
       with:

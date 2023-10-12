@@ -23,7 +23,7 @@ jobs:
       run: mvn clean install --file pom.xml
 
     - name: List generated WAR files
-      run: ls -l .m2/*.jar
+      run: ls -l server/src/.m2
 
     - name: Publish to Artifactory
       run: |

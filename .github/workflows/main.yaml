@@ -22,36 +22,32 @@ jobs:
     - name: Build project with Maven
       run: mvn clean install --file pom.xml
 
-    - name: List generated WAR files
-      run: ls -l server/src/.m2
+    - name: upload artifacts
+      run: mkdir staging $$ cp target/*.jar staging
 
-    - name: Deploy to Artifactory
-      uses: jfrog/setup-jfrog-cli@v3
-
-    - name: jfrog-version
-      run: jf --version
-
-    - name: j-frog-integration
-      uses: jfrog/setup-jfrog-cli@v3
+    - uses: actions/upload-artifact@v2
       with:
-        jfrog_url: ${{ secrets.JF_URL }}
-           # JFrog Platform access token
-        JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-        JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
-        JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+        name: package
+        path: staging  
 
-    - name: Publish to Artifactory
-      run: |
-        jf rt u "server/src/.m2/*.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/
+      
+      
+    # - name: List generated WAR files
+    #   run: ls -l server/src/.m2
 
-    - name: "Step1 - Build app" 
-      uses: "retgits/actions/jfrog-cli-go@master"
-      with:
-        jfrog_url: ${{ secrets.JF_URL }}
-           # JFrog Platform access token
-        JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-        JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
-        JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-        args: "go build go --no-registry"
-        env:
-          CRED: "username"
+    # - name: Deploy to Artifactory
+    #   uses: jfrog/setup-jfrog-cli@v3
+
+    # - name: jfrog-version
+    #   run: jf --version
+
+    # - name: j-frog-integration
+    #   uses: jfrog/setup-jfrog-cli@v3
+    #   with:
+    #     jfrog_url: ${{ secrets.JF_URL }}
+    #        # JFrog Platform access token
+    #     JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+    #     JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
+    #     JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+
+    

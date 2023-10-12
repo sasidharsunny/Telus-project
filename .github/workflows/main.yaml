@@ -26,7 +26,7 @@ jobs:
       run: mvn clean install --file pom.xml
 
     - name: Create Directory if Not Exists
-      run: mkdir development && cp target/*.war  development
+      run: mkdir development && cp /home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war  development
 
     - uses: actions/upload-artifact@v2
       with:

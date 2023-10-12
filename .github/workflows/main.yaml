@@ -27,4 +27,6 @@ jobs:
 
     - name: Deploy to Artifactory
       uses: jfrog/setup-jfrog-cli@v3
+      
+    - name: jfrog-version
       run: jf --version

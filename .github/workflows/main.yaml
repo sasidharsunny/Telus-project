@@ -27,12 +27,12 @@ jobs:
 
     - name: Deploy to Artifactory
       run: |
-        curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_API_KEY }} \
+        curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} \
           -T server/src/.m2/app.jar \
           "http://18.204.209.62:8081/artifactory/webapp/#/home/maven-artifact/server/src/.m2/app.jar/1.0/app.jar"
         # Replace placeholders with your actual values
 
       env:
         ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-        ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }}
+        ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_PASSWORD }}
 

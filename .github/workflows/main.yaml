@@ -28,7 +28,7 @@ jobs:
     - name: Create Directory if Not Exists
       run: |
         if [ ! -d /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war ]; then
-          mkdir -p /home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war
+          mkdir -p storage
         fi
 
     - uses: actions/upload-artifact@v2

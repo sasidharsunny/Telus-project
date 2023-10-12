@@ -220,7 +220,7 @@
    <repositories>
   <repository>
     <id>my-artifactory</id>
-    <url>http://50.16.37.205:8081/artifactory/</url>
+    <url>http://18.204.209.62:8081/artifactory/</url>
     <snapshots>
       <enabled>false</enabled>
     </snapshots>

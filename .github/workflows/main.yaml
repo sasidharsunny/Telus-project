@@ -42,4 +42,4 @@ jobs:
 
     - name: Publish to Artifactory
       run: |
-        jf rt u ".m2/*.jar" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/
+        jf rt u "/home/runner/work/Telus-project/Telus-project/webapp/target/webapp.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/

@@ -40,4 +40,4 @@ jobs:
 
     - name: Publish to Artifactory
       run: |
-        jf rt u "server/src/.m2/*" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/artifactory
+        jf rt u "server/src/.m2/*" "maven-artifact" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/artifactory

@@ -27,18 +27,23 @@ jobs:
 
     - name: Deploy to Artifactory
       uses: jfrog/setup-jfrog-cli@v3
-      
+
     - name: jfrog-version
       run: jf --version
-      
+
     - name: j-frog-integration
       uses: jfrog/setup-jfrog-cli@v3
-  env:
-    # JFrog platform url (for example: https://acme.jfrog.io) 
-    JF_URL: ${{ secrets.JF_URL }}
-    
-    # Basic authentication credentials
-    JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-    JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
- 
+      with:
+        env:
+          # JFrog platform URL (for example: https://acme.jfrog.io)
+          JF_URL: ${{ secrets.JF_URL }}
+
+          # Basic authentication credentials
+          JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+          JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+    - name: Publish to Artifactory
+      run: |
+        jf rt u "server/src/.m2/*.war" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact" --build-name="my-build" --build-number=1
+
 

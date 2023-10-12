@@ -25,12 +25,14 @@ jobs:
     - name: List generated WAR files
       run: ls -l server/src/.m2
 
-    - name: Publish to Artifactory
+    - name: Deploy to Artifactory
       run: |
-          for war_file in server/src/.m2; do
-            curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }} -T "$jar_file" "http://18.204.209.62:8081/artifactory/webapp/#/artifacts/browse/tree/General/maven-artifact/$(basename $jar_file)"
-          done
+        curl -u ${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_API_KEY }} \
+          -T server/src/.m2/app.jar \
+          "http://18.204.209.62:8081/artifactory/webapp/#/home/maven-artifact/server/src/.m2/app.jar/1.0/app.jar"
+        # Replace placeholders with your actual values
+
       env:
         ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-        ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }}
 

@@ -23,12 +23,12 @@ jobs:
       run: mvn clean install --file pom.xml
 
     - name: upload artifacts
-      run: mkdir staging $$ cp /home/runner/work/Telus-project/Telus-project/webapp/target/*.war staging
+      run: mkdir storage $$ cp /home/runner/work/Telus-project/Telus-project/webapp/target/*.war storage
 
     - uses: actions/upload-artifact@v2
       with:
         name: package
-        path: staging  
+        path: storage  
 
       
       

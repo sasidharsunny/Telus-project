@@ -26,7 +26,7 @@ jobs:
       run: mvn clean install --file pom.xml
 
     - name: Create Directory if Not Exists
-      run: mkdir development && cp /home/runner/work/Telus-project/Telus-project/webapp/target/* development
+      run: mkdir development && cp target/*.war  development
 
     - uses: actions/upload-artifact@v2
       with:

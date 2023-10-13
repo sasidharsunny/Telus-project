@@ -19,19 +19,31 @@ jobs:
       with:
         java-version: 8
 
-    - name: Clean Target Directory
-      run: rm -rf /home/runner/work/Telus-project/Telus-project/webapp/target/*
-
     - name: Build project with Maven
       run: mvn clean install --file pom.xml
 
-    - name: Create Directory if Not Exists
-      run: mkdir development && cp /home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war  development
+    - name: List generated WAR files
+      run: ls -l server/src/.m2
 
-    - uses: actions/upload-artifact@v2
+    - name: Deploy to Artifactory
+      uses: jfrog/setup-jfrog-cli@v3
+
+    - name: jfrog-version
+      run: jf --version
+
+    - name: j-frog-integration
+      uses: jfrog/setup-jfrog-cli@v3
       with:
-        name: package
-        path: development
+        jfrog_url: ${{ secrets.JF_URL }}
+           # JFrog Platform access token
+        JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+        JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
+        JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+
+    - name: Publish to Artifactory
+      run: |
+        jf rt u "/home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/
+
 
 
       

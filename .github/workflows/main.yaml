@@ -26,7 +26,7 @@ jobs:
       run: |
         curl -u $NEXUS_USERNAME:$NEXUS_PASSWORD --request POST \
           --url "https://http://3.85.171.142:8081/java-project-artifact/http:/3.85.171.142:8081/repository/java-project-artifact/com.example.maven-project/maven-project/1.0-SNAPSHOT/maven-project-1.0-SNAPSHOT.war" \
-          --data-binary "@target/home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war"
+          --data-binary "@target/maven-project-1.0-SNAPSHOT.war"
       env:
         NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
         NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}

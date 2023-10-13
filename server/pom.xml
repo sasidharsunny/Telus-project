@@ -15,6 +15,15 @@
   <name>Server</name>
   <description>Logic.</description>
 
+  <servers>
+  <server>
+    <id>nexus</id>
+    <username>admin</username>
+    <password>admin@123</password>
+  </server>
+</servers>
+
+
   <build>
     <finalName>${project.artifactId}</finalName>
   </build>

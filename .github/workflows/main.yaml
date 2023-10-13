@@ -1,4 +1,4 @@
-name: Maven CI/CD Project-simple
+name: Maven CI/CD Project
 
 on:
   push:
@@ -20,36 +20,16 @@ jobs:
         java-version: 8
 
     - name: Build project with Maven
-      run: mvn clean install --file pom.xml
+      run: mvn clean package --file pom.xml
 
-    - name: List generated WAR files
-      run: ls -l server/src/.m2
-
-    - name: Deploy to Artifactory
-      uses: jfrog/setup-jfrog-cli@v3
-
-    - name: jfrog-version
-      run: jf --version
-
-    - name: j-frog-integration
-      uses: jfrog/setup-jfrog-cli@v3
-      with:
-        jfrog_url: ${{ secrets.JF_URL }}
-           # JFrog Platform access token
-        JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-        JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}  
-        JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-
-    - name: Debug Secrets
+    - name: Publish Artifact to Nexus Artifactory
       run: |
-        echo "JF_URL: ${{ secrets.JF_URL }}"
-        echo "ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}"
-        echo "JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}"
-
-
-    - name: Publish to Artifactory
-      run: |
-        jf rt u "/home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war" "example-repo-local/" --build-name="my-build" --build-number=1 --url=http://18.204.209.62:8081/
+        curl -u $NEXUS_USERNAME:$NEXUS_PASSWORD --request POST \
+          --url "http://3.85.171.142:8081/http:/3.85.171.142:8081/repository/maven-public/your-repo-id/http://3.85.171.142:8081/repository/Maven/webapp.war/1.0/home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war" \
+          --data-binary "@target/your-artifact-id-your-version.war"
+      env:
+        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
 
 
 

@@ -22,11 +22,26 @@ jobs:
     - name: Build project with Maven
       run: mvn clean package --file pom.xml
 
-     - name: Deploy to Nexus/Artifactory
-        uses: actions/upload-artifact@v2
-        with:
-          name: war-artifact
-          path: /home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war
+    - name: Deploy to Nexus Repository
+      run: |
+        mvn deploy:deploy-file \
+          -Durl=http://3.85.171.142:8081/ \
+          -DrepositoryId=java-project-artifact \
+          -Dfile=/home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war \
+          -DgroupId=com.example.maven-project \
+          -DartifactId=maven-project \
+          -Dversion=1.0.0 \
+          -Dpackaging=war \
+          -DgeneratePom=true \
+          -DrepositoryUrl=http://3.85.171.142:8081/#browse/browse:java-project-artifact \
+          -Duser=$NEXUS_USERNAME \
+          -Dpassword=$NEXUS_PASSWORD
+      env:
+        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+
+
+     
 
 
 

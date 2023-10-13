@@ -25,8 +25,8 @@ jobs:
     - name: Publish Artifact to Nexus Artifactory
       run: |
         curl -u $NEXUS_USERNAME:$NEXUS_PASSWORD --request POST \
-          --url "http://3.85.171.142:8081/http:/3.85.171.142:8081/repository/maven-public/your-repo-id/http://3.85.171.142:8081/repository/Maven/webapp.war/1.0/home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war" \
-          --data-binary "@target/your-artifact-id-your-version.war"
+          --url "https://http://3.85.171.142:8081/java-project-artifact/http:/3.85.171.142:8081/repository/java-project-artifact/com.example.maven-project/maven-project/1.0-SNAPSHOT/maven-project-1.0-SNAPSHOT.war" \
+          --data-binary "@target/home/runner/.m2/repository/com/example/maven-project/webapp/1.0-SNAPSHOT/*.war"
       env:
         NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
         NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}

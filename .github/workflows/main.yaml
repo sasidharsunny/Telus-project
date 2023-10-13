@@ -42,9 +42,9 @@ jobs:
 
     - name: Debug Secrets
       run: |
-    echo "JF_URL: ${{ secrets.JF_URL }}"
-    echo "ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}"
-    echo "JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}"
+        echo "JF_URL: ${{ secrets.JF_URL }}"
+        echo "ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}"
+        echo "JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}"
 
 
     - name: Publish to Artifactory
